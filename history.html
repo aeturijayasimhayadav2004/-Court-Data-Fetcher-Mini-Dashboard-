@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Case History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        table {
+            margin: auto;
+            width: 90%;
+            background-color: white;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px #ccc;
+        }
+        th, td {
+            padding: 15px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+        .back-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+        .clear-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>📄 Past Case Queries</h1>
+    {% if rows %}
+        <table>
+            <tr>
+                <th>Case Type</th>
+                <th>Case Number</th>
+                <th>Case Year</th>
+                <th>PDF Link</th>
+            </tr>
+            {% for row in rows %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>
+                    {% if row[3].startswith('http') %}
+                        <a href="{{ row[3] }}" target="_blank">📥 Open PDF</a>
+                    {% else %}
+                        {{ row[3] }}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No history found.</p>
+    {% endif %}
+
+    <br>
+    <a href="/"><button class="back-btn">🔙 Back to Home</button></a>
+
+    <form method="post" action="/clear_history" style="display:inline;">
+        <button type="submit" class="clear-btn">🧹 Clear History</button>
+    </form>
+</body>
+</html>
